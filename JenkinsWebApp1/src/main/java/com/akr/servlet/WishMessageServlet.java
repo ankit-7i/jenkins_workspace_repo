@@ -19,7 +19,7 @@ public class WishMessageServlet extends HttpServlet {
 		// set response content type
 		res.setContentType("text/html");
 		// write content 
-		pw.println("<h1 style='color:red,text-align:center'>Good Morning Ankit</h1>");
+		pw.println("<h1 style='color:yellow,text-align:center'>Good Morning Ankit</h1>");
 		
 		// home hyperlink 
 		pw.println("<br> <a href='index.html'>home-page</a>");
