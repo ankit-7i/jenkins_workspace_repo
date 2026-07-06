@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<title>Connect with Ankit</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <span class="orb orb1"></span>
+    <span class="orb orb2"></span>
+    <span class="orb orb3"></span>
+  </div>
+
+  <button id="themeToggle" class="theme-toggle" aria-label="Switch to day mode">
+    <i class="fa-solid fa-sun"></i>
+  </button>
+
+  <main class="card" id="tiltCard">
+    <div class="avatar-wrap">
+      <span class="avatar-ring"></span>
+      <!-- Replace profile.jpg with Ankit's photo, kept in the same folder as index.html -->
+      <img
+        class="avatar"
+        src="profile.jpg"
+        alt="Ankit's profile photo"
+        onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23131a35%22/><circle cx=%2250%22 cy=%2238%22 r=%2218%22 fill=%22%23A9B2D6%22/><ellipse cx=%2250%22 cy=%2288%22 rx=%2230%22 ry=%2222%22 fill=%22%23A9B2D6%22/></svg>'"
+      >
+    </div>
+
+    <h1 class="name">Connect with Ankit</h1>
+    <p class="designation"> Junior Java Developer</p>
+
+    <div class="socials">
+      <a class="social-btn" data-platform="linkedin" data-tip="LinkedIn" href="redirect?platform=linkedin">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+      <a class="social-btn" data-platform="github" data-tip="GitHub" href="redirect?platform=github">
+        <i class="fa-brands fa-github"></i>
+      </a>
+      <a class="social-btn" data-platform="instagram" data-tip="Instagram" href="redirect?platform=instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a class="social-btn" data-platform="x" data-tip="X" href="redirect?platform=x">
+        <i class="fa-brands fa-x-twitter"></i>
+      </a>
+      <a class="social-btn" data-platform="facebook" data-tip="Facebook" href="redirect?platform=facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
