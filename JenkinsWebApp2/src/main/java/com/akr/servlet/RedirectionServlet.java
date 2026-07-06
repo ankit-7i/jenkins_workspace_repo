@@ -52,14 +52,14 @@ public class RedirectionServlet extends HttpServlet {
 				break;
 
 			case "x":
-				targetUrl = "https://x.com/your-x-id"; // TODO: put real X (formerly Twitter) URL
+				targetUrl = "https://x.com/AnkitRout07"; // TODO: put real X (formerly Twitter) URL
 				displayName = "X";
 				accentColor = "#f5f7ff";
 				iconClass = "fa-brands fa-x-twitter";
 				break;
 
 			case "facebook":
-				targetUrl = "https://www.facebook.com/your-facebook-id"; // TODO: put real Facebook URL
+				targetUrl = "https://www.facebook.com/ankitrout07/"; // TODO: put real Facebook URL
 				displayName = "Facebook";
 				accentColor = "#1877F2";
 				iconClass = "fa-brands fa-facebook-f";
