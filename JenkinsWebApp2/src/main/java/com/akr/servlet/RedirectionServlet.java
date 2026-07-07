@@ -2,7 +2,6 @@ package com.akr.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,46 +26,66 @@ public class RedirectionServlet extends HttpServlet {
 		String iconClass;
 
 		// map the platform key to the real profile link.
-		// Ankit will edit the targetUrl values below with his own links.
 		switch (platform.toLowerCase()) {
 
 			case "linkedin":
-				targetUrl = "https://www.linkedin.com/in/ankitrout07"; // TODO: put real LinkedIn URL
+				targetUrl = "https://www.linkedin.com/in/ankitrout07";
 				displayName = "LinkedIn";
 				accentColor = "#0A66C2";
 				iconClass = "fa-brands fa-linkedin-in";
 				break;
 
 			case "github":
-				targetUrl = "https://github.com/ankit-7i"; // TODO: put real GitHub URL
+				targetUrl = "https://github.com/ankit-7i";
 				displayName = "GitHub";
 				accentColor = "#f0f6fc";
 				iconClass = "fa-brands fa-github";
 				break;
 
 			case "instagram":
-				targetUrl = "https://www.instagram.com/ankit_rout_7_"; // TODO: put real Instagram URL
+				targetUrl = "https://www.instagram.com/ankit_rout_7_";
 				displayName = "Instagram";
 				accentColor = "#dd2a7b";
 				iconClass = "fa-brands fa-instagram";
 				break;
 
 			case "x":
-				targetUrl = "https://x.com/AnkitRout07"; // TODO: put real X (formerly Twitter) URL
+				targetUrl = "https://x.com/AnkitRout07";
 				displayName = "X";
 				accentColor = "#f5f7ff";
 				iconClass = "fa-brands fa-x-twitter";
 				break;
 
 			case "facebook":
-				targetUrl = "https://www.facebook.com/ankitrout07/"; // TODO: put real Facebook URL
+				targetUrl = "https://www.facebook.com/ankitrout07/";
 				displayName = "Facebook";
 				accentColor = "#1877F2";
 				iconClass = "fa-brands fa-facebook-f";
 				break;
 
+			case "whatsapp":
+				targetUrl = "https://wa.me/917682949708"; // TODO: put real WhatsApp number (with country code, no + or spaces)
+				displayName = "WhatsApp";
+				accentColor = "#25D366";
+				iconClass = "fa-brands fa-whatsapp";
+				break;
+
+			case "email":
+				targetUrl = "mailto:ankitrout513151979@gmail.com"; 
+				displayName = "Email";
+				accentColor = "#EA4335";
+				iconClass = "fa-solid fa-envelope";
+				break;
+
+			case "portfolio":
+				targetUrl = "https://your-portfolio-website.com"; 
+				displayName = "Portfolio";
+				accentColor = "#2DD4BF";
+				iconClass = "fa-solid fa-globe";
+				break;
+
 			default:
-				// unknown or missing platform -> just send the user back home
+				
 				res.sendRedirect("index.html");
 				return;
 		}
