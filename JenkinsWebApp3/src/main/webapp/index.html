@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankit Rout Enterprise Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #f59e0b;
+            --accent-glow: rgba(245, 158, 11, 0.4);
+            --bg-dark: #0f0f1a;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 60%),
+                var(--bg-dark);
+        }
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+        @keyframes bgPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: rgba(99, 102, 241, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(15, 15, 26, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a:hover::after { width: 100%; }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease;
+        }
+        .hero-badge .dot {
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--primary));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        .greeting-banner {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(245, 158, 11, 0.2));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.6s both;
+            backdrop-filter: blur(10px);
+        }
+        .greeting-banner h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .greeting-banner p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+        .wish-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(245, 158, 11, 0.2));
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 3rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.7s both;
+        }
+        .wish-link:hover {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 1rem;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+        .section-card {
+            position: relative;
+            padding: 2.5rem 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            display: block;
+        }
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(99, 102, 241, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .section-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
+        }
+        .section-card:hover::before { opacity: 1; }
+        .section-icon {
+            width: 60px; height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .section-card:nth-child(1) .section-icon { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .section-card:nth-child(2) .section-icon { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+        .section-card:nth-child(3) .section-icon { background: linear-gradient(135deg, #10b981, #06b6d4); }
+        .section-card:nth-child(4) .section-icon { background: linear-gradient(135deg, #ec4899, #f43f5e); }
+        .section-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .section-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        .section-card .arrow {
+            position: absolute;
+            bottom: 1.5rem; right: 1.5rem;
+            font-size: 1.2rem;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        .section-card:hover .arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .content-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+        }
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+        }
+        .section-container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+        .section-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 6rem;
+            font-weight: 900;
+            opacity: 0.1;
+            line-height: 1;
+            margin-bottom: -2rem;
+        }
+        .content-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+        .content-section .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .feature-box {
+            padding: 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        .feature-box:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+        .feature-box h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .feature-box p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        .back-home-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .back-home-btn:hover::before { left: 100%; }
+        .back-home-btn:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+            box-shadow: 0 0 40px var(--accent-glow), 0 0 80px rgba(245, 158, 11, 0.2);
+            transform: translateY(-2px);
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 10px var(--accent-glow), 0 0 20px rgba(245, 158, 11, 0.1); }
+            50% { box-shadow: 0 0 25px var(--accent-glow), 0 0 50px rgba(245, 158, 11, 0.2); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem; }
+            .nav-links { gap: 1rem; }
+            .nav-links a { font-size: 0.8rem; }
+            .sections-grid { grid-template-columns: 1fr; }
+            .hero { padding: 1rem; }
+            .content-section { padding: 5rem 1rem 3rem; }
+        }
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <nav class="navbar">
+        <div class="logo">Ankit</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Enterprise Solutions by ANKIT
+        </div>
+        <h1>Welcome to <span class="gradient-text">Ankit Portal</span></h1>
+        <p class="hero-subtitle">
+            Building next-generation enterprise applications with cutting-edge technology and unparalleled craftsmanship.
+        </p>
+        <div class="greeting-banner" id="greetingBanner">
+            <h2 id="greetingText">Loading...</h2>
+            <p id="timeText">Fetching Indian Standard Time...</p>
+        </div>
+        <a href="wishbutton" class="wish-link">&#127775; Greetings For You</a>
+        <div class="sections-grid">
+            <a href="#about" class="section-card">
+                <div class="section-icon">&#127970;</div>
+                <h3>About Us</h3>
+                <p>Discover our mission, vision, and the team behind Ankit innovations.</p>
+                <span class="arrow">&#8594;</span>
+            </a>
+            <a href="#services" class="section-card">
+                <div class="section-icon">&#9889;</div>
+                <h3>Services</h3>
+                <p>Explore our comprehensive suite of enterprise-grade solutions.</p>
+                <span class="arrow">&#8594;</span>
+            </a>
+            <a href="#portfolio" class="section-card">
+                <div class="section-icon">&#128640;</div>
+                <h3>Portfolio</h3>
+                <p>Browse our successful projects and transformative case studies.</p>
+                <span class="arrow">&#8594;</span>
+            </a>
+            <a href="#contact" class="section-card">
+                <div class="section-icon">&#128222;</div>
+                <h3>Contact</h3>
+                <p>Get in touch with our team for collaborations and inquiries.</p>
+                <span class="arrow">&#8594;</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="content-section" id="about">
+        <div class="section-container">
+            <div class="section-number">01</div>
+            <h2 class="reveal">About Us</h2>
+            <p class="section-desc reveal">
+                AKR is a forward-thinking technology company dedicated to delivering
+                enterprise-grade solutions that drive digital transformation.
+            </p>
+            <div class="feature-grid reveal">
+                <div class="feature-box">
+                    <h4>&#127919; Our Mission</h4>
+                    <p>To empower businesses with innovative technology solutions that create lasting impact.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>&#128065; Our Vision</h4>
+                    <p>Becoming the most trusted technology partner for enterprises worldwide.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>&#128161; Innovation</h4>
+                    <p>Pushing boundaries with cutting-edge research and development.</p>
+                </div>
+            </div>
+            <a href="#home" class="back-home-btn reveal">
+                <span>&#8592;</span> Back to Home
+            </a>
+        </div>
+    </section>
+
+    <section class="content-section" id="services">
+        <div class="section-container">
+            <div class="section-number">02</div>
+            <h2 class="reveal">Our Services</h2>
+            <p class="section-desc reveal">
+                From cloud architecture to AI integration, we offer a full spectrum of
+                services tailored to your business needs.
+            </p>
+            <div class="feature-grid reveal">
+                <div class="feature-box">
+                    <h4>&#9729; Cloud Solutions</h4>
+                    <p>Scalable cloud infrastructure and migration services.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>&#129302; AI & ML</h4>
+                    <p>Intelligent automation and predictive analytics.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>&#128274; Cybersecurity</h4>
+                    <p>Enterprise-grade security frameworks and compliance.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>&#128202; Data Analytics</h4>
+                    <p>Transform raw data into actionable business insights.</p>
+                </div>
+            </div>
+            <a href="#home" class="back-home-btn reveal">
+                <span>&#8592;</span> Back to Home
+            </a>
+        </div>
+    </section>
+
+    <section class="content-section" id="portfolio">
+        <div class="section-container">
+            <div class="section-number">03</div>
+            <h2 class="reveal">Portfolio</h2>
+            <p class="section-desc reveal">
+                A showcase of our most impactful projects that have transformed
+                businesses across industries.
+            </p>
+            <div class="feature-grid reveal">
+                <div class="feature-box">
+                    <h4>&#127974; FinTech Platform</h4>
+                    <p>Revolutionary banking solution serving 2M+ users daily.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>&#127973; HealthTech App</h4>
+                    <p>AI-powered diagnostic tool with 99.2% accuracy.</p>
+                </div>
+                <div class="feature-box">
+                    <h4>&#128722; E-Commerce Suite</h4>
+                    <p>Enterprise marketplace handling $500M+ annually.</p>
+                </div>
+            </div>
+            <a href="#home" class="back-home-btn reveal">
+                <span>&#8592;</span> Back to Home
+            </a>
+        </div>
+    </section>
+
+    <section class="content-section" id="contact">
+        <div class="section-container">
+            <div class="section-number">04</div>
+            <h2 class="reveal">Contact Us</h2>
+            <p class="section-desc reveal">
+                Ready to transform your business? Let's start a conversation
+                about your next big idea.
+            </p>
+            <div class="feature-grid reveal">
+                <div class="feature-box">
+                    <h4>&#9993; Email</h4>
+                    <p>hello@akr-enterprise.com</p>
+                </div>
+                <div class="feature-box">
+                    <h4>&#128241; Phone</h4>
+                    <p>+91 98765 43210</p>
+                </div>
+                <div class="feature-box">
+                    <h4>&#128205; Address</h4>
+                    <p>Bangalore, Karnataka, India</p>
+                </div>
+            </div>
+            <a href="#home" class="back-home-btn reveal">
+                <span>&#8592;</span> Back to Home
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&#169; 2026 AKR Enterprise Solutions. All rights reserved. | Crafted with precision.</p>
+    </footer>
+
+    <script>
+        function updateGreeting() {
+            const now = new Date();
+            const istOffset = 330;
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const istTime = new Date(utc + (istOffset * 60000));
+            const hour = istTime.getHours();
+            const minutes = istTime.getMinutes().toString().padStart(2, '0');
+            const seconds = istTime.getSeconds().toString().padStart(2, '0');
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            let greeting = '';
+            let icon = '';
+            if (hour >= 5 && hour < 12) { greeting = 'Good Morning'; icon = '&#127749;'; }
+            else if (hour >= 12 && hour < 16) { greeting = 'Good Afternoon'; icon = '&#9728;'; }
+            else if (hour >= 16 && hour < 20) { greeting = 'Good Evening'; icon = '&#127751;'; }
+            else { greeting = 'Good Night'; icon = '&#127769;'; }
+            document.getElementById('greetingText').innerHTML = icon + ' ' + greeting + ', Ankit!';
+            document.getElementById('timeText').textContent =
+                'Indian Standard Time: ' + displayHour + ':' + minutes + ':' + seconds + ' ' + ampm +
+                ' | ' + istTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        }
+        updateGreeting();
+        setInterval(updateGreeting, 1000);
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const colors = ['#6366f1', '#f59e0b', '#8b5cf6', '#10b981'];
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                p.style.animationDuration = (10 + Math.random() * 10) + 's';
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                p.style.width = (2 + Math.random() * 4) + 'px';
+                p.style.height = p.style.width;
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(15, 15, 26, 0.95)';
+                navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.3)';
+            } else {
+                navbar.style.background = 'rgba(15, 15, 26, 0.8)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
